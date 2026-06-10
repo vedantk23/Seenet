@@ -1,37 +1,4 @@
-"""
-ebm.py — Energy-Based Mixup (Algorithm 1)
-==========================================
-Exact implementation of Algorithm 1 from the paper.
 
-Paper Section III-C:
-  "EBM has three distinct features:
-   1) The duration of the mix is less than half the duration of the original
-      speech — will not affect the primary emotions in the speech.
-   2) The mixing scale is affected by the energy ratio between the two speech
-      signals.
-   3) There is no scaling applied to the original speech signal during the
-      mixing process — original speech remains unaffected."
-
-Algorithm 1 (verbatim):
-  Input:  Corpus U={ui}^N, mixing probability p, batch D={di}^B, D ⊂ U
-  Output: D={di}^B  (augmented in-place on a copy)
-  for i = 1 → B:
-      u  ~ U(0,1)
-      if u < p:
-          usec ~ uniform(U)                # random utterance from corpus
-          r    ~ U(-5, 5)                 # energy mixing ratio
-          L1   = len(di)                  # fixed 96000
-          L2   = len(usec)                # variable
-          l    ~ U{1, …, L1/2}            # mix length < half of di
-          if l < L2: s2 ~ U{0,…,L2-l}   # start in usec
-          else:      s2=0; l=L2
-          s1   ~ U{0,…,L1-l}             # start in di
-          E1   = Σ(di²) / L1
-          E2   = Σ(usec²) / L2
-          α    = sqrt(E1 / (10^(r/10) * E2))
-          di[s1:s1+l] += α * usec[s2:s2+l]   # original di unscaled
-  return D
-"""
 
 import torch
 import numpy as np
