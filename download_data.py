@@ -1,23 +1,4 @@
-"""
-download_data.py — Download & Scan RAVDESS
-============================================
-RAVDESS (Ryerson Audio-Visual Database of Emotional Speech and Song)
-is freely available from Zenodo under Creative Commons (CC BY-NC-SA 4.0).
 
-On Kaggle:
-  Option A — Add dataset: search "RAVDESS emotional speech audio" in Kaggle Datasets
-             → set DATA_DIR = "/kaggle/input/ravdess-emotional-speech-audio"
-  Option B — Download here with this script.
-
-Filename format:  03-01-{emotion}-{intensity}-{statement}-{rep}-{actor}.wav
-  pos 01: modality   (03 = audio-only)
-  pos 02: vocal ch   (01 = speech)
-  pos 03: emotion    (01-08)
-  pos 04: intensity  (01=normal, 02=strong)
-  pos 05: statement  (01, 02)
-  pos 06: repetition (01, 02)
-  pos 07: actor      (01-24)
-"""
 
 import os
 import zipfile
