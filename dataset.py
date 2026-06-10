@@ -1,14 +1,5 @@
-"""
-dataset.py — RAVDESS Dataset + LOSO Cross-Validation
-======================================================
-Implements:
-  - Audio loading (16 kHz mono) using soundfile (reliable on Kaggle/Linux)
-  - Pad / center-trim to 6 seconds  (paper Section IV-B)
-  - 8-class label encoder for RAVDESS
-  - Leave-One-Session-Out (LOSO) cross-validation splits
-    → 6 sessions × 4 actors each  (paper Section IV-A)
-  - PyTorch DataLoaders with collate function
-"""
+
+
 
 import os
 import torch
