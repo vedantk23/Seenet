@@ -1,27 +1,4 @@
-"""
-model.py — SeeNet Architecture
-================================
-Full SeeNet framework (Fig. 1 from paper):
 
-  Raw Audio (6 s @ 16 kHz)
-       │
-  WavLM Backbone  [pretrained, fine-tuned]
-       │  (B, T_frames, D)
-  SoftAttentionPooling  [Eqs. 1–2]
-       │  (B, D)
-       ├─── C-class Emotion Classifier  (primary task, Eq. 10)
-       └─── C × SEEModule (binary)      (auxiliary task, Eqs. 3–4)
-
-Three inference modes (Section III-B.2):
-  mode="cls"   λ=0   → C-class head only          (Eq. 13)
-  mode="see"   λ=1   → SEE modules as classifier  (Eqs. 11–12)
-  mode="joint" 0<λ<1 → weighted combination       (Eqs. 14–15)
-
-Memory optimizations for Kaggle T4 (16 GB):
-  - Gradient checkpointing on backbone   (~40% less VRAM)
-  - AMP (FP16) applied in train.py       (~50% less VRAM)
-  Both together let batch_size=8 fit comfortably on T4.
-"""
 
 import torch
 import torch.nn as nn
@@ -37,14 +14,7 @@ from hard_negative import build_see_batch
 # 1.  Soft Attention Pooling  (Eqs. 1–2)
 # ─────────────────────────────────────────────────────────────────────────────
 class SoftAttentionPooling(nn.Module):
-    """
-    Aggregates N frame-level vectors into one utterance embedding.
-
-    Eq. 1:  α_n^i = softmax( tanh(W ⊙ z_n^i) )      (⊙ = Hadamard product)
-    Eq. 2:  e^i   = Σ_n  α_n^i · z_n^i
-
-    W ∈ R^{1×D} is a learnable weight vector.
-    """
+   
 
     def __init__(self, hidden: int = config.BACKBONE_HIDDEN):
         super().__init__()
@@ -70,11 +40,7 @@ class SoftAttentionPooling(nn.Module):
 # 2.  SEE Module  (Eq. 3)
 # ─────────────────────────────────────────────────────────────────────────────
 class SEEModule(nn.Module):
-    """
-    Soft Emotion Expert k — binary classifier (MLP_k).
-    Architecture: D → 256 → 1  (paper: "two fully connected layers")
-    Loss: BCEWithLogitsLoss  (Eq. 4)
-    """
+    
 
     def __init__(
         self,
