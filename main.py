@@ -1,17 +1,4 @@
-"""
-main.py — SeeNet Entry Point
-==============================
-Run on Kaggle:
-  python main.py                   # defaults: 5 epochs, WavLM-Base, auto device
-  python main.py --epochs 30       # paper settings for RAVDESS
-  python main.py --no-ebm          # ablation: disable EBM
-  python main.py --data-dir /kaggle/input/ravdess-emotional-speech-audio
 
-Kaggle tip:
-  If you add the RAVDESS Kaggle dataset to your notebook, set:
-    --data-dir /kaggle/input/ravdess-emotional-speech-audio
-  Otherwise this script downloads it automatically (~215 MB from Zenodo).
-"""
 
 import argparse
 import os
