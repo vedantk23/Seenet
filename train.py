@@ -1,21 +1,4 @@
-"""
-train.py — SeeNet Multi-Task Training Loop
-===========================================
-Implements:
-  - Multi-task loss: L_total = (1-λ)*L_cls + λ*(1/C)*ΣL_k   (Eq. 9)
-  - Primary loss:    L_cls = CrossEntropy                      (Eq. 10)
-  - Auxiliary loss:  L_k   = BCEWithLogitsLoss per SEE expert  (Eq. 4)
-  - Online EBM augmentation (Algorithm 1)
-  - AMP (FP16 mixed precision) for GPU memory efficiency
-  - UA / WA evaluation metrics  (Section IV-D)
-  - Full LOSO cross-validation
 
-Memory strategy for Kaggle T4 (16 GB):
-  - AMP (autocast FP16): ~50% less VRAM              ← biggest win
-  - Gradient checkpointing (in model.py): ~40% less  ← second biggest
-  - Batch size 8: safe baseline                       ← tune up if needed
-  Together these let WavLM-Base + batch=8 run in ~6–7 GB.
-"""
 
 import os
 import gc
